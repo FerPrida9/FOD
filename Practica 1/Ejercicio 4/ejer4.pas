@@ -4,6 +4,14 @@
 teclado. Tener en cuenta que no se debe agregar al archivo un empleado con
 un número de empleado ya registrado (control de unicidad).
 
+b. Modificar la edad de un empleado dado.
+
+c. Exportar el contenido del archivo a un archivo de texto llamado
+“todos_empleados.txt”.
+
+d. Exportar a un archivo de texto llamado: “faltaDNIEmpleado.txt”, los empleados
+que no tengan cargado el DNI (DNI en 00).
+
 }
 
 program ejer4;
