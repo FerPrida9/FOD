@@ -1,0 +1,9 @@
+1 300000.00  samsung
+10 5  samsung phone
+samsung galaxy a22
+2 500000.00  apple
+8 3  apple phone
+iphone 15 pro
+3 200000.00  xiaomi
+8 10  xiaomi phone
+redmi note 10
