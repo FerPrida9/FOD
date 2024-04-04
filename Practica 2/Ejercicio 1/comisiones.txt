@@ -1,0 +1,8 @@
+7 500 Luca
+7 800 Luca
+8 200 Valentino
+8 100 Valentino
+8 400 Valentino 
+9 100 Fermin
+9 300 Fermin
+9 500 Fermin
