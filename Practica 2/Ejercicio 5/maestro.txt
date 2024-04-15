@@ -1,0 +1,8 @@
+1 1200 20 10 Block
+chocolate
+2 700 30 40 Don Satur
+galletitas
+3 2500 20 40 Coca Cola 
+gaseosa
+4 1800 40 20 Baggio 
+jugo 
