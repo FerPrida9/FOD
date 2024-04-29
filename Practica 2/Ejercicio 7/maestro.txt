@@ -1,0 +1,10 @@
+1 3 50 30 20 5 COVID 19
+Brandsen
+1 4 100 40 50 10 COVID 20
+Brandsen
+2 3 150 60 70 20 COVID 19
+La Plata
+2 4 200 80 100 30 COVID 20
+La Plata
+3 3 30 15 10 3 COVID 19
+Jeppener
