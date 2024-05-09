@@ -1,0 +1,20 @@
+codigo: 0 / precio: 0.00 / duracion: 
+genero: 
+nombre: 
+director: 
+
+codigo: 1 / precio: 5000.00 / duracion: 4 horas
+genero: terror
+nombre: chucky 2
+director: ferpaaa
+
+codigo: 6 / precio: 300.00 / duracion: 3 horas
+genero: comedia
+nombre: un show mas
+director: juancito
+
+codigo: 3 / precio: 2000.00 / duracion: 1 hora y media
+genero: suspenso
+nombre: la ouija
+director: pepe
+
