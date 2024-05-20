@@ -66,26 +66,26 @@ var
 
     N = (M-1) * A + M * B + C
 
-    512 = (M-1) * 64 + M * 4 + 4
-    512 = 64M - 64 + 4M + 4
-    512 = 64M + 4M - 64 + 4
-    512 = 68M - 60
-    512 + 60 = 68M
-    572 = 68M
-    572/68 = M
-    8,4 = M
+    512 = (M-1) * 64 + M * 4 + 4  
+    512 = 64M - 64 + 4M + 4  
+    512 = 64M + 4M - 64 + 4  
+    512 = 68M - 60  
+    512 + 60 = 68M  
+    572 = 68M  
+    572/68 = M  
+    8,4 = M  
 
     M = 8    // Me quedo con la parte entera
 
-    TNodo = record
-        cant_datos : integer; // Ocupa 4 bytes
-        datos : array[1..M-1] of persona; // Ocupa 7*64 bytes
-        hijos : array[1..M] of integer; // Ocupa 8*4 Bytes
-    end;
-**Conclusion:**
+    TNodo = record  
+        cant_datos : integer; // Ocupa 4 bytes  
+        datos : array[1..M-1] of persona; // Ocupa 7*64 bytes  
+        hijos : array[1..M] of integer; // Ocupa 8*4 Bytes  
+    end;  
+**Conclusion:**  
  512 - ((7*64) + (8*4) + 4) = 28 ---> Por lo tanto entran 7 registros persona y sobran 28 bytes
 
- 
+
 
 
     
