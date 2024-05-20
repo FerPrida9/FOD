@@ -31,7 +31,7 @@ los casos? ¿Cuáles serían estos casos?
 f. ¿Qué ocurre si desea buscar un alumno por un criterio diferente? ¿Cuántas
 lecturas serían necesarias en el peor de los casos?
 
-- a_
+- **A**
 ```pascal
 const 
     M = ..; // orden del arbol
@@ -56,7 +56,7 @@ var
     archivoDatos: arbolB;
 ```
 
-- b_
+- **B**
     - N = 512 bytes
     - A = 64 bytes
     - B = 4 bytes
