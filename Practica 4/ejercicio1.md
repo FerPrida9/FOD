@@ -85,6 +85,31 @@ var
 **Conclusion:**  
  512 - ((7*64) + (8*4) + 4) = 28 ---> Por lo tanto entran 7 registros persona y sobran 28 bytes
 
+- **C**
+    Organizar el archivo como un arbol B no tiene ningun impacto sobre  
+    el valor de M
+
+- **D** 
+    Usaria como clave el DNI de los alumnos ya que no se repite.  
+    Tambien podria usarse el legajo.
+
+- **E**
+    **Mejor caso:**  
+    La clave que busco se encuentra en la raiz = 1 lectura  
+    
+    **Peor caso:**
+    La clave que busco se encuentra en una hoja = 1 lectura * altura del arbol
+
+- **F**
+    Lo que ocurre es que no aprovechariamos el ordenamiento del arbol.  
+    En el peor de los casos se necesitarian tantas lectura como nodos tenga el arbol.
+
+
+
+
+ 
+ 
+
 
 
 
