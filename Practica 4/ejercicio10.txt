@@ -1,0 +1,60 @@
+Dado el siguiente árbol B de orden 5, mostrar cómo quedaría el mismo luego de realizar
+las siguientes operaciones: +450, -485, -511, -614.
+Política de resolución de underflows: derecha.
+
+                        2: 0 (315) 1 (485) 4 (547) 5 (639) 3
+
+0: (148)(223)   1: (333)(390)(442)(454)     4: (508)(511)   5: (614)(633)   3: (789)(915)
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
++450 
+                                          8: 2 (485) 7
+
+            2: 0 (315) 1 (442) 6                                    7: 4 (547) 5 (639) 3
+
+0: (148)(223)   1: (333)(390)   6: (450)(454)          4: (508)(511)   5: (614)(633)   3: (789)(915)
+
+L2, L1, E1, E6, E2, E7, E8 
+
+Se intenta insertar el 450 en el nodo 1, se produce overflow, se divide, se crea el nodo 6, y se promociona 
+el 442 a la raiz, se produce overflow en la raiz, se divide y se crea el nodo 7 y se promociona el 485 al 
+8 (nueva raiz) por lo tanto la altura del arbol aumenta en 1 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-485 
+                                          8: 2 (508) 7
+
+            2: 0 (315) 1 (442) 6                                    7: 4 (547) 5 (639) 3
+
+0: (148)(223)   1: (333)(390)   6: (450)(454)          4: (511)   5: (614)(633)   3: (789)(915)
+
+L8, L7, L4, E4, E8
+
+Se elimina la clave 485 de la raiz, queda en underflow, como la raiz no tiene hermanos se reemplaza por 
+la clave menor del subarbol derecho, no se produce underflow ya que el minimo es 1
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-511
+                                          8: 2 (508) 7
+
+            2: 0 (315) 1 (442) 6                                    7: 4 (614) 5 (639) 3
+
+0: (148)(223)   1: (333)(390)   6: (450)(454)              4: (547)      5: (633)     3: (789)(915)
+
+L8, L7, L4, E4, L5, E5, E4, E7
+
+Se elimina el 511, se produce underflow en el nodo 4, se redistribuye con el hermano derecho (nodo 5)
+ 
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-614
+                                          8: 2 (508) 7
+
+            2: 0 (315) 1 (442) 6                                    7: 4 (633) 5 (789) 3
+
+0: (148)(223)   1: (333)(390)   6: (450)(454)              4: (547)      5: (639)       3: (915)
+
+L8, L7, L5, E7, L3, E5, E3, E7 
+
+Se elimina el 614 del nodo 7, se produce underflow entonces se reemplaza por la menor clave del subarbol derecho, 
+esto genera underflow en el nodo 5, entonces se redistribuye con el hermano derecho y se reordenan las claves del 
+arbol para que queden bien los punteros
