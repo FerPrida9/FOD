@@ -1,0 +1,200 @@
+Dada las siguientes operaciones, mostrar la construcción paso a paso de un árbol B de
+orden 4: +50 , +70, +40, +15, +90, +120, +115, +45, +30, +100, +112, +77, -45, -40, -50, -90,
+-100.
+Política de resolución de underflows: izquierda o derecha.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
++50
+                                0: (50)
+
+E0
+
+Como no hay nodos, creo el nodo 0 e inserto el 50
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
++70
+                                0: (50)(70)
+
+L0, E0 
+
+Inserto el 70 en el nodo 0 sin problema
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
++40
+
+                                0: (40)(50)(70)
+
+L0, E0 
+
+Inserto el 40 en el nodo 0 sin problema
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
++15
+                                      2: 0 (50) 1
+
+                            0: (15)(40)              1: (70)
+
+L0, E0, E1, E2
+
+Intento insertar el 15 en el nodo 0, se produce overflow, divido, creo el nodo 1 y promociono el 
+50, creo el nodo 2 que pasa a ser la nueva raiz y la altura del arbol aumenta en 1
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
++90
+                                      2: 0 (50) 1
+
+                            0: (15)(40)              1: (70)(90)
+
+L2, L1, E1
+
+Inserto el 90 en el nodo 1 sin problema 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
++120 
+                                      2: 0 (50) 1
+
+                            0: (15)(40)              1: (70)(90)(120)
+
+L2, L1, E1
+
+Inserto el 120 en el nodo 1 sin problema 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
++115 
+                                      2: 0 (50) 1 (115) 3
+
+                            0: (15)(40)      1: (70)(90)     3: (120)
+
+L2, L1, E1, E3, E2
+
+Intento insertar el 115 en el nodo 1, se produce overflow, divido y creo el nodo 3, y promociono el 115 
+a la raiz 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
++45 
+                                      2: 0 (50) 1 (115) 3
+
+                            0: (15)(40)(45)      1: (70)(90)     3: (120)
+
+L2, L0, E0 
+
+Inserto el 45 en el nodo 0 sin problema 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
++30 
+                                      2: 0 (40) 4 (50) 1 (115) 3
+
+                            0: (15)(30)     4: (45)      1: (70)(90)     3: (120)
+
+L2, L0, E0, E4, E2
+
+Se intenta insertar el 30 en el nodo 0, se produce overflow, divido y creo el nodo 4, y promociono 
+el 40 a la raiz 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
++100 
+                                      2: 0 (40) 4 (50) 1 (115) 3
+
+                            0: (15)(30)     4: (45)      1: (70)(90)(100)     3: (120)
+
+L2, L1, E1 
+
+Inserto el 100 en el nodo 1 sin problema 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
++112 
+                                                7: 2 (100) 6
+
+                          2: 0 (40) 4 (50) 1                            6: 5 (115) 3
+
+                 0: (15)(30)     4: (45)      1: (70)(90)           5: (112)        3: (120)
+
+L2, L1, E1, E5, E2, E6, E7
+
+Se intenta insertar el 112 en el nodo 1, se produce overflow, se divide y se crea el nodo 5, 
+se promociona el 100 al nodo 2, se produce overflow, se divide y se crea el nodo 6, se promociona 
+el 100 a la nueva raiz (nodo 7) por lo tanto aumenta la altura del arbol en 1
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
++77
+                                                7: 2 (100) 6
+
+                          2: 0 (40) 4 (50) 1                            6: 5 (115) 3
+
+                 0: (15)(30)     4: (45)      1: (70)(77)(90)           5: (112)        3: (120)
+
+L7, L2, L1, E1 
+
+Se inserta el 77 en el nodo 1 sin problema 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-45 
+                                                7: 2 (100) 6
+
+                          2: 0 (30) 4 (50) 1                            6: 5 (115) 3
+
+                 0: (15)     4: (40)      1: (70)(77)(90)           5: (112)        3: (120)
+
+L7, L2, L4, L0, E0, E4, E2 
+
+Se elimina el 45 del nodo 4, se produce underflow, se redistribuye con el hermano izquierdo y se 
+ajustan las claves del nodo padre 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-40 
+                                                7: 2 (100) 6
+
+                          2: 0 (30) 4 (70) 1                            6: 5 (115) 3
+
+                 0: (15)     4: (50)      1: (77)(90)           5: (112)        3: (120)
+
+L7, L2, L4, L0, L1, E4, E1, E2
+
+Se elimina el 40 del nodo 4, se produce underflow, se intenta redistribuir con el hermano izquierdo, como 
+no se puede porque contiene la minima cantidad de elementos, se redistribuye con el hermano derecho y se ajustan 
+las claves del nodo padre 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-50 
+                                                7: 2 (100) 6
+
+                          2: 0 (30) 4 (77) 1                            6: 5 (115) 3
+
+                 0: (15)     4: (70)      1: (90)           5: (112)        3: (120)
+
+L7, L2, L4, L0, L1, E4, E1, E2 
+
+Se elimina el 50 del nodo 4, se produce underflow, se intenta redistribuir con el hermano izquierdo, como 
+no se puede porque contiene la minima cantidad de elementos, se redistribuye con el hermano derecho y se ajustan 
+las claves del nodo padre 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-90 
+                                                7: 2 (100) 6
+
+                          2: 0 (30) 4                             6: 5 (115) 3
+
+                 0: (15)        4: (70)(77)                5: (112)        3: (120)
+
+L7, L2, L1, L4, E4, E1, E2 
+
+Se elimina el 90 del nodo 1, se produce underflow, intento redistribuir con el hermano izquierdo, como 
+no se puede se intenta con el derecho pero no tiene, asi que se fusiona con el izquierdo, se libera el 
+nodo 1 y se reajustan las claves del nodo padre 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-100 
+                                 
+
+                                        2: 0 (30) 4 (112) 5                        
+
+                 0: (15)                    4: (70)(77)                5: (115)(120) 
+
+L7, L6, L5, E5, E7, L3, E3, E5, L2, E2, E6, E7 
+
+Se elimina el 100 del nodo raiz, se produce underflow entonces se reemplaza por la clave mas chica del subarbol 
+derecho, al hacer eso se produce underflow en el nodo 5, como no se puede redistribuir con el hermano izquierdo 
+(no tiene) ni con el derecho (tiene la cantidad minima), entonces se fusiona con el nodo 3 y 6, y se liberan los 
+nodos 3 y 6. Al hacer esto el arbol queda desbalanceado, por lo tanto se debe bajar un nivel, entonces lo que se 
+hace es fusionar el nodo raiz (nodo 7) con su hijo izquierdo (nodo 2) y al hacer esto se libera al nodo 7 y 
+la altura del arbol baja en 1.
