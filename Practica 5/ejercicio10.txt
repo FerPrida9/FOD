@@ -1,0 +1,120 @@
+Para las siguientes claves, realice el proceso de dispersión mediante el método de
+hashing extensible, sabiendo que cada nodo tiene capacidad para dos registros. El
+número natural indica el orden de llegada de las claves.  Se debe mostrar el estado del
+archivo para cada operación. Justifique brevemente ante colisión y desborde los pasos
+que realiza.
+
+1   Guillermo.B     01100011    4   Gomez     00000001
+2   Gustavo.B       01010110    5   Sosa      11110100
+3   Enria           00110101    6   Guli      00101000
+
+------------------------------------------------------------------------------------------------------
+1   Guillermo.B     01100011
+
+(0)         (0)
+ 0 --->     (Guillermo.B)
+
+
+- Como no se toma ningun bit para dispersar la clave Guillermo.B, se inserta en el primer y unico 
+nodo apuntado por la celda 0.
+
+------------------------------------------------------------------------------------------------------
+2   Gustavo.B       01010110
+
+(0)         (0)
+ 0 --->     (Guillermo.B)(Gustavo.B)
+
+
+- Como no se toma ningun bit para dispersar la clave Gustavo.B, se inserta en el primer y unico 
+nodo apuntado por la celda 0, generando colision. 
+
+------------------------------------------------------------------------------------------------------
+3   Enria           00110101
+
+(1)         
+ 0 --->     (1)
+            (Gustavo.B)
+
+ 1 --->     (1)
+            (Guillermo.B)(Enria)
+
+
+- La insercion de la clave Enria produce desborde en la cubeta apuntada por la celda 0. Se incrementa 
+en 1 el valor asociado a la cubeta saturada y se crea una nueva cubeta con el nuevo valor asociado a 
+la cubeta saturada. 
+- Como la tabla no dispone de entradas suficientes para apuntar a la nueva cubeta, se duplica la cantidad 
+de celdas y se aumenta en 1 el valor asociado a la tabla. 
+- La celda con referencia 0 apunta a la cubeta saturada y la celda con referencia 1 apunta a la cubeta 
+nueva. 
+- Se redispersan las claves involucradas en el desborde:
+  - Guillermo.B
+  - Gustavo.B 
+  - Enria 
+
+------------------------------------------------------------------------------------------------------
+4   Gomez     00000001
+
+(2)         
+00 --->     (1)
+10 --->     (Gustavo.B)
+
+01 --->     (2)
+            (Enria)(Gomez)
+
+11 --->     (2)
+            (Guillermo.B)
+
+
+- La insercion de la clave Gomez produce desborde en la cubeta apuntada por la celda 1. Se incrementa 
+en 1 el valor asociado a la cubeta saturada y se crea una nueva cubeta con el nuevo valor asociado a 
+la cubeta saturada. 
+- Como la tabla no dispone de entradas suficientes para apuntar a la nueva cubeta, se duplica la cantidad 
+de celdas y se aumenta en 1 el valor asociado a la tabla. 
+- La celda con referencia 01 apunta a la cubeta saturada y la celda con referencia 11 apunta a la cubeta 
+nueva. 
+- Se redispersan las claves involucradas en el desborde:
+  - Guillermo.B
+  - Enria 
+  - Gomez 
+
+------------------------------------------------------------------------------------------------------
+5   Sosa      11110100
+
+(2)         
+00 --->     (1)
+10 --->     (Gustavo.B)(Sosa)
+
+01 --->     (2)
+            (Enria)(Gomez)
+
+11 --->     (2)
+            (Guillermo.B)
+
+
+- Se inserta la clave Sosa en la celda 00 sin problema produciendo colision. 
+
+------------------------------------------------------------------------------------------------------
+6   Guli      00101000
+
+(2)         
+00 --->     (2)
+            (Sosa)(Guli)
+
+10 --->     (2)
+            (Gustavo.B)
+
+01 --->     (2)
+            (Enria)(Gomez)
+
+11 --->     (2)
+            (Guillermo.B)
+
+- La insercion de la clave Guli produce desborde en la cubeta apuntada por la celda 00. Se incrementa 
+en 1 el valor asociado a la cubeta saturada y se crea una nueva cubeta con el nuevo valor asociado a 
+la cubeta saturada.  
+- La celda con referencia 00 apunta a la cubeta saturada y la celda con referencia 10 apunta a la cubeta 
+nueva. 
+- Se redispersan las claves involucradas en el desborde:
+  - Gustavo.B
+  - Sosa
+  - Guli

@@ -1,0 +1,165 @@
+Realice el proceso de dispersión mediante el método de hashing extensible, sabiendo que
+cada registro tiene capacidad para dos claves. El número natural indica el orden de
+llegada de las mismas. Se debe mostrar el estado del archivo para cada operación.
+Justifique brevemente ante colisión y desborde los pasos que realiza.
+
+1   Buenos Aires    ....1001    2   San Juan        ....0100
+3   Entre Ríos      ....1110    4   Corrientes      ....0010
+5   San Luis        ....0101    6   Tucumán         ....0111
+7   Rio Negro       ....0011    8   Jujuy           ....1111
+------------------------------------------------------------------------------------------------------
+1   Buenos Aires    ....1001
+
+(0)
+ 0 --->     (0)
+            (Buenos Aires)()
+
+No se toma ningun bit de la funcion de hash ya que el valor asociado a la tabla es 0. Se inserta 
+la clave Buenos Aires en la celda 0
+
+------------------------------------------------------------------------------------------------------
+2   San Juan        ....0100
+
+(0)
+ 0 --->     (0)
+            (Buenos Aires)(San Juan)
+
+No se toma ningun bit de la funcion de hash ya que el valor asociado a la tabla es 0. Se inserta 
+la clave San Juan en la celda 0
+
+------------------------------------------------------------------------------------------------------
+3   Entre Ríos      ....1110
+
+(1)          (1)
+ 0 --->      (San Juan)(Entre Rios)
+ 
+ 1 --->      (1)
+             (Buenos Aires)()
+
+
+- La insercion de Entre Rios produce desborde en la cubeta apuntada por la celda 0. Se incrementa
+en 1 el valor de la cubeta saturada y se crea una nueva cubeta con el valor asociado a la cubeta 
+saturada. 
+- Como la tabla no dispone de entradas suficientes para direccionar a la nueva cubeta, se duplica 
+la cantidad de celdas de la tabla y se aumenta en 1 el valor asociado a la tabla. 
+- La celda con refencia 0 apunta a la cubeta saturada y la celda con referencia 1 apunta a la 
+cubeta nueva.
+- Se redispersan las claves involucradas en el desborde:
+  - Buenos Aires
+  - San Juan
+  - Entre Rios 
+
+------------------------------------------------------------------------------------------------------
+4   Corrientes      ....0010
+
+(2)          (2)
+00 --->      (San Juan)
+
+10 --->      (2)
+             (Entre Rios)(Corrientes)
+ 
+01 --->      (1)
+11 --->      (Buenos Aires)()
+
+- La insercion de Corrientes produce desborde en la cubeta apuntada por la celda 0. Se incrementa
+en 1 el valor de la cubeta saturada y se crea una nueva cubeta con el valor asociado a la cubeta 
+saturada. 
+- Como la tabla no dispone de entradas suficientes para direccionar a la nueva cubeta, se duplica 
+la cantidad de celdas de la tabla y se aumenta en 1 el valor asociado a la tabla. 
+- La celda con refencia 00 apunta a la cubeta saturada y la celda con referencia 10 apunta a la 
+cubeta nueva.
+- Se redispersan las claves involucradas en el desborde:
+  - San Juan
+  - Entre Rios 
+  - Corrientes 
+
+------------------------------------------------------------------------------------------------------
+5   San Luis        ....0101
+
+(2)          (2)
+00 --->      (San Juan)
+
+10 --->      (2)
+             (Entre Rios)(Corrientes)
+ 
+01 --->      (1)
+11 --->      (Buenos Aires)(San Luis)
+
+
+- Se inserta San Luis en la celda 01 sin problema 
+
+------------------------------------------------------------------------------------------------------
+6   Tucumán         ....0111
+
+(2)          (2)
+00 --->      (San Juan)
+
+10 --->      (2)
+             (Entre Rios)(Corrientes)
+ 
+01 --->      (2)
+             (Buenos Aires)(San Luis)
+
+11 --->      (2)
+             (Tucuman)
+
+
+- La insercion de Tucuman produce desborde en la cubeta apuntada por la celda 11. Se incrementa
+en 1 el valor de la cubeta saturada y se crea una nueva cubeta con el valor asociado a la cubeta 
+saturada. 
+- La celda con refencia 01 apunta a la cubeta saturada y la celda con referencia 11 apunta a la 
+cubeta nueva.
+- Se redispersan las claves involucradas en el desborde:
+  - Buenos Aires
+  - San Luis 
+  - Tucuman
+
+------------------------------------------------------------------------------------------------------
+7   Rio Negro       ....0011
+
+(2)          (2)
+00 --->      (San Juan)
+
+10 --->      (2)
+             (Entre Rios)(Corrientes)
+ 
+01 --->      (2)
+             (Buenos Aires)(San Luis)
+
+11 --->      (2)
+             (Tucuman)(Rio Negro)
+
+
+- Se inserta Rio Negro en la celda 11 sin problema 
+
+------------------------------------------------------------------------------------------------------
+8   Jujuy           ....1111
+
+(3)          
+000 --->     (2)
+100 --->     (San Juan)
+
+010 --->     (2)
+110 --->     (Entre Rios)(Corrientes)
+ 
+001 --->      (2)
+101 --->      (Buenos Aires)(San Luis)
+
+011 --->     (3)
+             (Rio Negro)
+
+111 --->     (3)
+             (Tucuman)(Jujuy)
+
+
+- La insercion de Jujuy produce desborde en la cubeta apuntada por la celda 11. Se incrementa
+en 1 el valor de la cubeta saturada y se crea una nueva cubeta con el valor asociado a la cubeta 
+saturada. 
+- Como la tabla no dispone de entradas suficientes para direccionar a la nueva cubeta, se duplica 
+la cantidad de celdas de la tabla y se aumenta en 1 el valor asociado a la tabla. 
+- La celda con refencia 011 apunta a la cubeta saturada y la celda con referencia 111 apunta a la 
+cubeta nueva.
+- Se redispersan las claves involucradas en el desborde:
+  - Tucuman
+  - Rio Negro
+  - Jujuy 

@@ -1,0 +1,13 @@
+Qué alternativas existen para reducir el número de colisiones (y por ende de
+desbordes) en un archivo organizado mediante la técnica de hashing?
+
+Existen diferentes soluciones para reducir el numero de colisiones, algunas de ellas son:
+
+- Esparcir registros: buscar metodos que distribuyan los registros de la forma mas aleatoria 
+posible. Esto se lograria buscando una funcion de hash lo mas eficiente posible.
+
+- Usar memoria adicional: distribuir pocos registros en muchas direcciones, esto baja la 
+densidad de empaquetamiento y tambien desperdicia espacio. 
+
+- Colocar mas de un registro por direccion: direcciones con N claves. Esto se logra aumentando
+la capacidad de los nodos, logrando que en un nodo entre mas de 1 registro

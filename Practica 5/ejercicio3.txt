@@ -1,0 +1,17 @@
+Explique los conceptos de sinónimo, colisión y desborde (overflow). ¿Qué condición es
+necesaria en el archivo directo para que pueda ocurrir una colisión y no un desborde?
+
+Colision:
+
+Situacion que ocurre cuando un registro es asignado a una direccion en donde ya hay uno 
+o mas registros.
+
+Desborde:
+
+Situacion que ocurre cuando un registro es asignado a una direccion en la cual ya no hay mas
+espacio para insertar registros. Cuando esto ocurre hay que encontrar lugar para el registro 
+en otra direccion y asegurarse de que el registro sea posteriormente encontrado en esa direccion.
+
+La condicion necesaria para que pueda ocurrir una colision y no un desborde es que debe haber 
+espacio en la direccion (en esta direccion ya se encuentran almacenados uno o mas registros) 
+asignada por la funcion de hash, donde se almacenara el registro.

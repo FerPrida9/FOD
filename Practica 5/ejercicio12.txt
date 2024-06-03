@@ -1,0 +1,218 @@
+Realice el proceso de dispersión mediante el método de hashing extensible, sabiendo
+que cada nodo tiene capacidad para dos claves. El número natural indica el orden de
+llegada de las mismas. Deberá explicar los pasos que realiza en cada operación y
+dibujar los estados sucesivos correspondientes (inclusive el estado inicial).
+
+1   Aconcagua   10100111    2   Kilimanjaro     10101010
+3   Mont Blanc  00111110    4   Cervino         01101111
+5   Etna        00110101    6   Chañi           11110000
+7   Cho Oyu     01011101    8   Vinicunca       01011011
+9   Manaslu     00110100    10  Monte Tai       11100011
+
+------------------------------------------------------------------------------------------------------
+1   Aconcagua   10100111
+
+(0)
+ 0 --->     (0)
+            (Aconcagua) 
+
+
+- Como no se toma ningun bit para dispersar la clave Aconcagua, se insertar en la primer y 
+unica cubeta apuntada por la celda con referencia 0.
+
+------------------------------------------------------------------------------------------------------
+2   Kilimanjaro     10101010
+
+(0)
+ 0 --->     (0)
+            (Aconcagua)(Kilimanjaro)
+
+
+- Como no se toma ningun bit para dispersar la clave Kilimanjaro, se insertar en la primer y 
+unica cubeta apuntada por la celda con referencia 0 y se genera colision. 
+
+------------------------------------------------------------------------------------------------------
+3   Mont Blanc  00111110
+
+(1)
+ 0 --->     (1)
+            (Kilimanjaro)(Mont Blanc)
+
+ 1 --->     (1)
+            (Aconcagua)
+
+
+- La insercion de la clave Mont Blanc produce desborde en la cubeta apuntada por la celda 0. Se incrementa 
+en 1 el valor asociado a la cubeta saturada y se crea una nueva cubeta con el nuevo valor asociado a 
+la cubeta saturada. 
+- Como la tabla no dispone de entradas suficientes para apuntar a la nueva cubeta, se duplica la cantidad 
+de celdas y se aumenta en 1 el valor asociado a la tabla. 
+- La celda con referencia 0 apunta a la cubeta saturada y la celda con referencia 1 apunta a la cubeta 
+nueva. 
+- Se redispersan las claves involucradas en el desborde:
+  - Aconcagua
+  - Kilimanjaro 
+  - Mont Blanc
+
+------------------------------------------------------------------------------------------------------
+4   Cervino         01101111
+
+(1)
+ 0 --->     (1)
+            (Kilimanjaro)(Mont Blanc)
+
+ 1 --->     (1)
+            (Aconcagua)(Cervino)
+
+
+- Se inserta la clave Cervino en la cubeta apuntada por la celda 1 generando colision. 
+
+------------------------------------------------------------------------------------------------------
+5   Etna        00110101
+
+(2)
+00 --->     (1)
+10 --->     (Kilimanjaro)(Mont Blanc)
+
+01 --->     (2)
+            (Etna) 
+
+11 --->     (2)
+            (Aconcagua)(Cervino)
+
+
+- La insercion de la clave Etna produce desborde en la cubeta apuntada por la celda 1. Se incrementa 
+en 1 el valor asociado a la cubeta saturada y se crea una nueva cubeta con el nuevo valor asociado a 
+la cubeta saturada. 
+- Como la tabla no dispone de entradas suficientes para apuntar a la nueva cubeta, se duplica la cantidad 
+de celdas y se aumenta en 1 el valor asociado a la tabla. 
+- La celda con referencia 01 apunta a la cubeta saturada y la celda con referencia 11 apunta a la cubeta 
+nueva. 
+- Se redispersan las claves involucradas en el desborde:
+  - Aconcagua
+  - Cervino 
+  - Etna 
+
+------------------------------------------------------------------------------------------------------
+6   Chañi           11110000
+
+(2)
+00 --->     (2)
+            (Chañi)
+
+10 --->     (2)
+            (Kilimanjaro)(Mont Blanc)
+
+01 --->     (2)
+            (Etna) 
+
+11 --->     (2)
+            (Aconcagua)(Cervino)
+
+
+- La insercion de la clave Andujar produce desborde en la cubeta apuntada por la celda 00. Se incrementa 
+en 1 el valor asociado a la cubeta saturada y se crea una nueva cubeta con el nuevo valor asociado a 
+la cubeta saturada.
+- Como el valor asociado a la tabla es igual al valor asociado a la cubeta saturada no se duplica la 
+cantidad de celdas.  
+- La celda con referencia 00 apunta a la cubeta saturada y la celda con referencia 01 apunta a la cubeta 
+nueva. 
+- Se redispersan las claves involucradas en el desborde:
+  - Kilimanjaro
+  - Mont Blanc
+  - Chañi
+
+------------------------------------------------------------------------------------------------------
+7   Cho Oyu     01011101
+
+(2)
+00 --->     (2)
+            (Chañi)
+
+10 --->     (2)
+            (Kilimanjaro)(Mont Blanc)
+
+01 --->     (2)
+            (Etna)(Cho Oyu)
+
+11 --->     (2)
+            (Aconcagua)(Cervino)
+
+
+- Se inserta la clave Cho Oyu en la cubeta apuntada por la celda 01 generando colision. 
+
+------------------------------------------------------------------------------------------------------
+8   Vinicunca       01011011
+
+(3)
+000 --->    (2)
+100 --->    (Chañi)
+
+010 --->    (2)
+110 --->    (Kilimanjaro)(Mont Blanc)
+
+001 --->    (2)
+101         (Etna)(Cho Oyu)
+
+011 --->    (3)
+            (Vinicunca) 
+
+111 --->    (3)
+            (Aconcagua)(Cervino)
+
+
+- La insercion de la clave Vinicunca produce desborde en la cubeta apuntada por la celda 11. Se incrementa 
+en 1 el valor asociado a la cubeta saturada y se crea una nueva cubeta con el nuevo valor asociado a 
+la cubeta saturada. 
+- Como la tabla no dispone de entradas suficientes para apuntar a la nueva cubeta, se duplica la cantidad 
+de celdas y se aumenta en 1 el valor asociado a la tabla. 
+- La celda con referencia 011 apunta a la cubeta saturada y la celda con referencia 111 apunta a la cubeta 
+nueva. 
+- Se redispersan las claves involucradas en el desborde:
+  - Aconcagua
+  - Cervino 
+  - Vinicunca
+
+------------------------------------------------------------------------------------------------------
+9   Manaslu     00110100
+
+(3)
+000 --->    (2)
+100 --->    (Chañi)(Manaslu)
+
+010 --->    (2)
+110 --->    (Kilimanjaro)(Mont Blanc)
+
+001 --->    (2)
+101         (Etna)(Cho Oyu)
+
+011 --->    (3)
+            (Vinicunca) 
+
+111 --->    (3)
+            (Aconcagua)(Cervino)
+            
+
+- Se inserta la clave Manaslu en la cubeta apuntada por la celda 100 generando colision. 
+
+------------------------------------------------------------------------------------------------------
+10  Monte Tai       11100011
+
+(3)
+000 --->    (2)
+100 --->    (Chañi)(Manaslu)
+
+010 --->    (2)
+110 --->    (Kilimanjaro)(Mont Blanc)
+
+001 --->    (2)
+101         (Etna)(Cho Oyu)
+
+011 --->    (3)
+            (Vinicunca)(Monte Tai)
+
+111 --->    (3)
+            (Aconcagua)(Cervino)
+
+
+- Se inserta la clave Monte Tai en la cubeta apuntada por la celda 011 generando colision.

@@ -1,0 +1,128 @@
+Para las siguientes claves, realice el proceso de dispersión mediante el método de
+hashing extensible, sabiendo que cada nodo tiene capacidad para dos registros. El
+número natural indica el orden de llegada de las claves.  Se debe mostrar el estado del
+archivo para cada operación. Justifique brevemente ante colisión y desborde los pasos
+que realiza.
+
+1   Verón       01100010    4   Sosa        10001000
+2   Braña       01010111    5   Pavone      11110101
+3   Calderón    00110100    6   Andújar     00101001
+------------------------------------------------------------------------------------------------------
+1   Verón       01100010
+
+(0)
+ 0 --->     (0)
+            (Veron)
+
+
+- Como el valor asociado a la tabla es 0, significa que no debemos tomar ningun bit 
+de la funcion de hash para dispersar la clave, entonces insertamos la clave Veron 
+en la primer y unica cubeta apuntada por la celda 0 de la tabla. 
+
+------------------------------------------------------------------------------------------------------
+2   Braña       01010111
+
+(0)
+ 0 --->     (0)
+            (Veron)(Braña)
+
+
+- Como el valor asociado a la tabla es 0, significa que no debemos tomar ningun bit 
+de la funcion de hash para dispersar la clave, entonces insertamos la clave Braña 
+en la primer y unica cubeta apuntada por la celda 0 de la tabla. 
+
+------------------------------------------------------------------------------------------------------
+3   Calderón    00110100
+
+(1)
+ 0 --->     (1)
+            (Veron)(Calderón)
+
+ 1 --->     (1)
+            (Braña)
+
+
+- La insercion de la clave Calderón produce desborde en la cubeta apuntada por la celda 0. Se incrementa 
+en 1 el valor asociado a la cubeta saturada y se crea una nueva cubeta con el nuevo valor asociado a 
+la cubeta saturada. 
+- Como la tabla no dispone de entradas suficientes para apuntar a la nueva cubeta, se duplica la cantidad 
+de celdas y se aumenta en 1 el valor asociado a la tabla. 
+- La celda con referencia 0 apunta a la cubeta saturada y la celda con referencia 1 apunta a la cubeta 
+nueva. 
+- Se redispersan las claves involucradas en el desborde:
+  - Veron
+  - Braña
+  - Calderón
+
+------------------------------------------------------------------------------------------------------
+4   Sosa        10001000
+
+(2)
+00 --->     (2)
+            (Calderón)(Sosa)
+
+10 --->     (2)
+            (Veron)
+
+
+01 --->     (1)
+11 --->     (Braña)
+
+
+- La insercion de la clave Sosa produce desborde en la cubeta apuntada por la celda 0. Se incrementa 
+en 1 el valor asociado a la cubeta saturada y se crea una nueva cubeta con el nuevo valor asociado a 
+la cubeta saturada. 
+- Como la tabla no dispone de entradas suficientes para apuntar a la nueva cubeta, se duplica la cantidad 
+de celdas y se aumenta en 1 el valor asociado a la tabla. 
+- La celda con referencia 00 apunta a la cubeta saturada y la celda con referencia 10 apunta a la cubeta 
+nueva. 
+- Se redispersan las claves involucradas en el desborde:
+  - Veron
+  - Calderón
+  - Sosa 
+
+------------------------------------------------------------------------------------------------------
+5   Pavone      11110101
+
+(2)
+00 --->     (2)
+            (Calderón)(Sosa)
+
+10 --->     (2)
+            (Veron)
+
+
+01 --->     (1)
+11 --->     (Braña)(Pavone)
+
+
+- Se inserta la clave Pavone en la cubeta apuntada por la celda 01 generando colision.
+
+------------------------------------------------------------------------------------------------------
+6   Andújar     00101001
+
+(2)
+00 --->     (2)
+            (Calderón)(Sosa)
+
+10 --->     (2)
+            (Veron)
+
+
+01 --->     (2)
+            (Pavone)(Andújar)
+
+11 --->     (2)
+            (Braña)
+
+- La insercion de la clave Andujar produce desborde en la cubeta apuntada por la celda 01. Se incrementa 
+en 1 el valor asociado a la cubeta saturada y se crea una nueva cubeta con el nuevo valor asociado a 
+la cubeta saturada.
+- Como el valor asociado a la tabla es igual al valor asociado a la cubeta saturada no se duplica la 
+cantidad de celdas.  
+- La celda con referencia 01 apunta a la cubeta saturada y la celda con referencia 11 apunta a la cubeta 
+nueva. 
+- Se redispersan las claves involucradas en el desborde:
+  - Andujar
+  - Pavone
+  - Braña

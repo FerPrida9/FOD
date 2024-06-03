@@ -1,0 +1,8 @@
+Explique el concepto de función de dispersión. Enumere al menos tres funciones de
+dispersión y explique brevemente cómo funciona cada una.
+
+Funcion de dispersion:
+
+Esta funcion puede verse como una caja negra que recibe una clave, y a partir de esa clave 
+devuelve la direccion de memoria donde debe almacenarse el registro asociado a la clave en el 
+archivo de datos.

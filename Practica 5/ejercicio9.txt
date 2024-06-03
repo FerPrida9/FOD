@@ -1,0 +1,125 @@
+Para las siguientes claves, realice el proceso de dispersion mediante el metodo de
+hashing extensible, sabiendo que cada nodo tiene capacidad para dos registros.
+El numero natural indica el orden de llegada de las claves. 
+
+Se debe mostrar el estado del archivo para cada operación. Justifique brevemente ante
+colision y desborde los pasos que realiza
+
+1 Borges   11110100  2 Sabato  00111111
+3 Cortazar 01010111  4 Lugones 10100101
+5 Casares  10101010  6 Walsh   01101011
+
+-------------------------------------------------------------------------------------------------------------------
+1 Borges   11110100
+
+(0)         (0)
+ 0 --->     (Borges)()
+
+
+- Se toman 0 bits de la funcion de hash para insertar la clave. 
+- Se inserta la clave Borges en la celda 0 sin problema 
+
+-------------------------------------------------------------------------------------------------------------------
+2 Sabato  00111111
+
+(0)         (0)
+ 0 --->     (Borges)(Sabato)
+
+
+- Se toman 0 bits de la funcion de hash para insertar la clave. 
+- Se inserta la clave Sabato en la celda 0 sin problema.
+
+-------------------------------------------------------------------------------------------------------------------
+3 Cortazar 01010111
+
+(1)         (1)
+ 0 --->     (Borges)
+
+ 1 --->     (1)
+            (Sabato)(Cortazar)
+
+
+- La insercion de Cortazar produce desborde en la cubeta apuntada por la celda 0. Se incrementa 
+en 1 el valor asociado a la cubeta saturada y se crea una nueva cubeta con el nuevo valor de la 
+cubeta saturada.
+- Como la tabla en memoria no dispone de entradas suficientes para direccionar la nueva cubeta, se 
+duplica la cantidad de celdas y se aumenta en 1 el valor asociado a la tabla
+- La celda con referencia 0 apunta a la cubeta saturada y la celda con referencia 1 apunta a la 
+cubeta nueva. 
+- Se redispersan las claves involucradas en el desborde:
+  - Borges
+  - Sabato
+  - Cortazar
+
+-------------------------------------------------------------------------------------------------------------------
+4 Lugones 10100101
+
+(2)         
+00 --->     (1)
+10 --->     (Borges)
+
+01 --->     (2)
+            (Lugones)
+
+11 --->     (2)
+            (Sabato)(Cortazar)
+
+
+- La insercion de Lugones produce desborde en la cubeta apuntada por la celda 1. Se incrementa 
+en 1 el valor asociado a la cubeta saturada y se crea una nueva cubeta con el nuevo valor de la 
+cubeta saturada.
+- Como la tabla en memoria no dispone de entradas suficientes para direccionar la nueva cubeta, se 
+duplica la cantidad de celdas y se aumenta en 1 el valor asociado a la tabla
+- La celda con referencia 01 apunta a la cubeta saturada y la celda con referencia 11 apunta a la 
+cubeta nueva. 
+- Se redispersan las claves involucradas en el desborde:
+  - Sabato
+  - Cortazar
+  - Lugones
+
+-------------------------------------------------------------------------------------------------------------------
+5 Casares  10101010
+
+(2)         
+00 --->     (1)
+10 --->     (Borges)(Casares)
+
+01 --->     (2)
+            (Lugones)
+
+11 --->     (2)
+            (Sabato)(Cortazar)
+
+
+- Se inserta la clave Casares en la celda 10 sin problema 
+
+-------------------------------------------------------------------------------------------------------------------
+6 Walsh   01101011
+
+(3)         
+000 --->     (1)
+010 --->     (Borges)(Casares)
+100 --->
+110 --->
+
+001 --->    (2)
+101 --->    (Lugones)
+
+011 --->    (3)
+            (Walsh)
+
+111 --->    (3)
+            (Sabato)(Cortazar)
+
+
+- La insercion de Walsh produce desborde en la cubeta apuntada por la celda 1. Se incrementa 
+en 1 el valor asociado a la cubeta saturada y se crea una nueva cubeta con el nuevo valor de la 
+cubeta saturada.
+- Como la tabla en memoria no dispone de entradas suficientes para direccionar la nueva cubeta, se 
+duplica la cantidad de celdas y se aumenta en 1 el valor asociado a la tabla
+- La celda con referencia 011 apunta a la cubeta saturada y la celda con referencia 111 apunta a la 
+cubeta nueva. 
+- Se redispersan las claves involucradas en el desborde:
+  - Sabato
+  - Cortazar
+  - Walsh 
