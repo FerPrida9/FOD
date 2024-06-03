@@ -1,0 +1,64 @@
+Dado un arbol B de orden 4 con politica izquierda, realice las siguientes operaciones:
++25, -30, -5, -48
+
+Arbol inicial
+
+                    2: 0 (10) 1 (30) 4 (60) 3
+
+        0: (5)    1: (15)(20)(23)   4: (42)(48)     3: (70)
+
+------------------------------------------------------------------------------------------  
++25
+                                            7: 2 (30) 6
+
+                 2: 0 (10) 1 (23) 5                                6: 4 (60) 3
+
+        0: (5)    1: (15)(20)   5: (25)                       4: (42)(48)     3: (70)
+
+L2, L1, E1, E5, E2, E6, E7
+
+- Intento insertar el 25 en el nodo 1, se produce overflow, divido, creo el nodo 5 y promociono el 23. Al 
+promocionar se propaga el overflow en el nodo 2, divido, creo el nodo 6 y promociono el 30 al nuevo nodo 7
+(nueva raiz). La altura del arbol aumenta en 1. 
+
+------------------------------------------------------------------------------------------
+-30
+                                            7: 2 (42) 6
+
+                 2: 0 (10) 1 (23) 5                                6: 4 (60) 3
+
+        0: (5)    1: (15)(20)   5: (25)                       4: (48)        3: (70)
+
+L7, L6, L4, E4, E7
+
+- Elimino la clave 30 del nodo 7 y la reemplazo por la clave mas chica del subarbol derecho (42). Elimino 
+la clave 42 del nodo 4.
+
+------------------------------------------------------------------------------------------
+-5
+                                            7: 2 (42) 6
+
+                2: 0 (15) 1 (23) 5                                6: 4 (60) 3
+
+          0: (10)    1: (20)   5: (25)                       4: (48)        3: (70)
+
+L7, L2, L0, L1, E0, E1, E2 
+
+- Elimino la clave 5 de nodo 0, se produce underflow, como no me sirve la politica izquierda ya que no tiene 
+hermano izquierdo, lo que hago es redistribuir con el hermano derecho. Bajo la clave 10 del padre al nodo 0, 
+y subo el 15 del nodo 1 (hermano derecho) al padre.
+
+------------------------------------------------------------------------------------------
+-48
+                                        7: 2 (23) 6
+
+                2: 0 (15) 1                                        6: 5 (42) 4
+
+          0: (10)       1: (20)                              5: (25)          4: (60)(70)       
+
+L7, L6, L4, L3, E4, E3, L2, E2, E6, E7
+
+- Elimino el 48 del nodo 4, se produce undeflow, como no tengo hermano izquierdo y el hermano derecho no puede
+redistribuir ya que tiene la cantidad minima de elementos, entonces fusiono con el hermano derecho. Se libera el 
+nodo 3. Bajo el 60 al nodo 4. Al hacer esto el underflow se propaga al nodo 6, asi que redistribuyo con el 
+hermano izquierdo.
