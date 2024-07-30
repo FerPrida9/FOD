@@ -1,0 +1,138 @@
+Realice el proceso de dispersión mediante el método de hashing extensible, sabiendo que
+cada registro tiene capacidad para dos claves. El número natural indica el orden de
+llegada de las mismas. Se debe mostrar el estado del archivo para cada operación.
+Justifique brevemente ante colisión y desborde los pasos que realiza.
+
+1   Buenos Aires    ....1001    2   San Juan        ....0100
+3   Entre Ríos      ....1110    4   Corrientes      ....0010
+5   San Luis        ....0101    6   Tucumán         ....0111
+7   Rio Negro       ....0011    8   Jujuy           ....1111
+------------------------------------------------------------------------------------------------------
+1   Buenos Aires    ....1001
+
+(0)
+ 0 ----> (0)
+         (Buenos Aires)
+
+No se toma ningun bit de la funcion de hash para insertar la clave Buenos Aires ya que el valor asociado a 
+la tabla es 0. Buenos Aires se inserta en la primer y unica cubeta apuntada por la celda 0
+
+------------------------------------------------------------------------------------------------------
+2   San Juan        ....0100
+
+(0)
+ 0 ----> (0)
+         (Buenos Aires)(San Juan)
+
+No se toma ningun bit de la funcion de hash para insertar la clave San Juan ya que el valor asociado a 
+la tabla es 0. Buenos Aires se inserta en la primer y unica cubeta apuntada por la celda 0
+
+------------------------------------------------------------------------------------------------------
+3   Entre Ríos      ....1110
+
+(1)
+ 0 ----> (1)
+         (San Juan)(Entre Rios) N0
+
+ 1 ----> (1)
+         (Buenos Aires) N1
+
+La insercion de Entre Rios produce colision y desborde en el nodo 0. Se aumenta en 1 el valor asociado al nodo 0 y 
+se crea un nuevo nodo con el mismo valor asociado del nodo 0 (nodo saturado). Como el valor asociado del nodo es 
+mayor al valor asociado de la tabla, se aumenta en 1 el valor asociado a la tabla y se duplican la cantidad de 
+direcciones de la misma. Por ultimo se redispersan las claves involucradas en el desborde
+
+------------------------------------------------------------------------------------------------------
+4   Corrientes      ....0010
+
+(2)
+00 ----> (2)
+         (San Juan) N0
+
+10 ----> (2)
+         (Entre Rios)(Corrientes) N2
+
+01 ----> (1)
+11 ----> (Buenos Aires) N1
+
+La insercion de Corrientes produce colision y desborde en el nodo 0. Se aumenta en 1 el valor asociado al nodo 0 y 
+se crea un nuevo nodo con el mismo valor asociado del nodo 0 (nodo saturado). Como el valor asociado del nodo es 
+mayor al valor asociado de la tabla, se aumenta en 1 el valor asociado a la tabla y se duplican la cantidad de 
+direcciones de la misma. Por ultimo se redispersan las claves involucradas en el desborde
+
+------------------------------------------------------------------------------------------------------
+5   San Luis        ....0101
+
+(2)
+00 ----> (2)
+         (San Juan) N0
+
+10 ----> (2)
+         (Entre Rios)(Corrientes) N2
+
+01 ----> (1)
+11 ----> (Buenos Aires)(San Luis) N1
+
+Se toman 2 bits de la funcion de hash de la clave San Luis y se inserta en el nodo 1 generando colision 
+
+------------------------------------------------------------------------------------------------------
+6   Tucumán         ....0111
+
+(2)
+00 ----> (2)
+         (San Juan) N0
+
+10 ----> (2)
+         (Entre Rios)(Corrientes) N2
+
+01 ----> (2)
+         (Buenos Aires)(San Luis) N1
+
+11 ----> (2)
+         (Tucuman) N3 
+
+La insercion de Tucuman produce colision y desborde en el nodo 1. Se aumenta en 1 el valor asociado al nodo 1 y 
+se crea un nuevo nodo con el mismo valor asociado del nodo 1. La celda 01 queda apuntando al nodo saturado y la 
+celda 11 al nodo nuevo. Por ultimo se redispersan las claves involucradas en el desborde 
+
+------------------------------------------------------------------------------------------------------
+7   Rio Negro       ....0011
+
+(2)
+00 ----> (2)
+         (San Juan) N0
+
+10 ----> (2)
+         (Entre Rios)(Corrientes) N2
+
+01 ----> (2)
+         (Buenos Aires)(San Luis) N1
+
+11 ----> (2)
+         (Tucuman)(Rio Negro) N3 
+
+Se toman 2 bits de la funcion de hash de la clave Rio Negro y se inserta en el nodo 3 generando colision
+
+------------------------------------------------------------------------------------------------------
+8   Jujuy           ....1111
+
+(3)
+000 ----> (2)
+100 ----> (San Juan) N0
+
+010 ----> (2)
+110 ----> (Entre Rios)(Corrientes) N2
+
+001 ----> (2)
+101 ----> (Buenos Aires)(San Luis) N1
+
+011 ----> (3)
+          (Rio Negro) N3
+
+111 ----> (3) 
+          (Tucuman)(Jujuy) N4
+
+La insercion de la clave Jujuy produce colision y desborde en el nodo 3. Se aumenta en 1 el valor asociado al 
+nodo 3 y se crea un nuevo nodo con el mismo valor asociado del nodo 3. Como el valor asociado del nodo es mayor 
+al valor asociado de la tabla, se aumenta en 1 el valor asociado de la tabla y se duplican la cantidad de direcciones 
+de la misma. Por ultimo, se redispersan las claves involucradas en el desborde

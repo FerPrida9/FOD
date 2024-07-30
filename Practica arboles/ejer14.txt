@@ -1,0 +1,83 @@
+Dado el siguiente árbol B de orden 6, mostrar cómo quedaría el mismo luego de realizar
+las siguientes operaciones: +300, +577, -586, -570, -380, -460.
+Política de resolución de underflows: izquierda o derecha.
+
+                                    2: 0 (216) 1 (460) 4 (570) 5 (689) 3 (777) 6
+
+0: (100)(159)(171)      1: (222)(256)(358)(380)(423)   4: (505)(522)    5: (586)(599)(615)(623)(680)    3: (703)(725)   6: (789)(915)(1000)       
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
++300    
+                                                        9: 2 (570) 8
+
+            2: 0 (216) 1 (358) 7 (460) 4                                                      8: 5 (689) 3 (777) 6
+
+0: (100)(159)(171)   1: (222)(256)(300)   7: (380)(423)   4: (505)(522)    5: (586)(599)(615)(623)(680)    3: (703)(725)   6: (789)(915)(1000)
+
+L2, L1, E1, E7, E2, E8, E9
+
+Se intenta insertar el 300 en el nodo 1, se produce overflow, se divide, se crea el nodo 7 y se promociona el 358. El overflow se propaga
+al nodo 2, se divide, se crea el nodo 8 y se promociona el 570 al nuevo nodo 9 (nueva raiz). La altura del arbol aumenta en 1 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
++577
+                                                        9: 2 (570) 8
+
+            2: 0 (216) 1 (358) 7 (460) 4                                                      8: 5 (615) 10 (689) 3 (777) 6
+
+0: (100)(159)(171)   1: (222)(256)(300)   7: (380)(423)   4: (505)(522)    5: (577)(586)(599)    10: (623)(680)    3: (703)(725)   6: (789)(915)(1000)
+
+L9, L8, L5, E5, E10, E8 
+
+Se intenta insertar el 577 en el nodo 5, se produce overflow, se divide, se crea el nodo 10 y se promociona el 615 al nodo 8 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-586
+                                                        9: 2 (570) 8
+
+            2: 0 (216) 1 (358) 7 (460) 4                                                      8: 5 (615) 10 (689) 3 (777) 6
+
+0: (100)(159)(171)   1: (222)(256)(300)   7: (380)(423)   4: (505)(522)    5: (577)(599)    10: (623)(680)    3: (703)(725)   6: (789)(915)(1000)
+
+L9, L8, L5, E5 
+
+Se elimina el 586 del nodo 5 sin problema 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-570
+                                                        9: 2 (577) 8
+
+            2: 0 (216) 1 (358) 7 (460) 4                                                         8: 5 (689) 3 (777) 6
+
+0: (100)(159)(171)   1: (222)(256)(300)   7: (380)(423)   4: (505)(522)       5: (599)(615)(623)(680)    3: (703)(725)   6: (789)(915)(1000)
+
+L9, L8, L5, L3, E5, E3, E8, E9 
+
+Se elimina el 570 del nodo 9, se produce underflow, se reemplaza por la clave mas chica del subarbol derecho. El underflow se propaga al
+nodo 5, como no puede redistribuir con el unico hermano, se fusiona con el hermano derecho y se reajustan las claves del nodo padre (nodo 8)
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-380
+                                                        9: 2 (577) 8
+
+            2: 0 (216) 1 (300) 7 (460) 4                                                         8: 5 (689) 3 (777) 6
+
+0: (100)(159)(171)   1: (222)(256)   7: (358)(423)   4: (505)(522)          5: (599)(615)(623)(680)    3: (703)(725)   6: (789)(915)(1000)
+
+L9, L2, L7, L1, E1, E7, E2 
+
+Se elimina el 380 del nodo 7, se produce underflow, se redistribuye con el hermano izquierdo y se reajustan las claves del nodo padre 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-460 
+                                                        9: 2 (577) 8
+
+            2: 0 (216) 1 (300) 7                                                       8: 5 (689) 3 (777) 6
+
+0: (100)(159)(171)   1: (222)(256)   7: (358)(423)(505)(552)         5: (599)(615)(623)(680)    3: (703)(725)   6: (789)(915)(1000)
+
+L9, L2, L4, L7, E7, E2 
+
+Se elimina el 460 del nodo 2, se reemplaza con la menor clave del subarbol derecho. Se propaga el underflow al nodo 4, como no se 
+puede redistribuir con el hermano izquierdo y no tiene hermano derecho, se fusiona con el hermano izquierdo, se libera el nodo 4 y 
+se reajustan las claves del nodo padre 

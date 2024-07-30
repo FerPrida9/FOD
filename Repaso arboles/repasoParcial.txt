@@ -1,0 +1,116 @@
+Arbol B archivo:
+
+program arbolB;
+const 
+    M = ...;  //  ORDEN DEL ARBOL 
+type 
+    alumno = record
+        DNI: longint;
+        nombre: string;
+    end;
+
+    nodo = record 
+        cant_datos: integer;
+        datos: array[1..M-1] of alumno;
+        hijos: array[1..M] of integer;
+    end;
+
+    arbolB = file of nodo;
+
+var 
+    archivo: arbolB;
+
+
+Arbol B indice:
+
+program arbolB;
+const 
+    M = ...; // ORDEN DEL ARBOL 
+type 
+    alumno = record
+        DNI: longint;
+        nombre: string;
+    end;
+
+    nodo = record 
+        cant_claves: integer;
+        claves: array[1..M-1] of longint;
+        enlaces: array[1..M-1] of integer;
+        hijos: array[1..M] of integer;
+    end;
+
+    TarchivoDatos: file of alumno;
+    arbolB: file of nodo;
+
+var 
+    archivoDatos: TarchivoDatos;
+    archivoIndice: arbolB;
+
+
+Arbol B+ ejercicio:
+
+Dado el siguiente árbol B+ de orden 4 y con política de resolución de underflows a
+derecha, realice las siguientes operaciones indicando lecturas y escrituras en el orden
+de ocurrencia. Además, debe describir detalladamente lo que sucede en cada
+operación. +58, -403, +260, -550
+
+                4:0 (240) 1 (403) 2 (500) 3
+
+0: (3)(45) (60) 1  1: (240)(255)(360) 2  2: (409)(420) 3  3: (550)-1
+
+----------------------------------------------------------------------------------------------------
++58
+                                    7: 4 (403) 6
+
+            4:0 (58) 5 (240) 1                                6:  2 (500) 3
+
+0: (3)(45)  5:(58)(60) 1  1: (240)(255)(360) 2          2: (409)(420) 3  3: (550)-1
+
+L4, L0, E0, E5, E4, E6, E7 
+
+----------------------------------------------------------------------------------------------------
+-403
+                                    7: 4 (403) 6
+
+            4:0 (58) 5 (240) 1                                6:  2 (500) 3
+
+0: (3)(45)  5:(58)(60) 1  1: (240)(255)(360) 2          2: (409)(420) 3  3: (550)-1
+
+L7, L6, L2 
+
+----------------------------------------------------------------------------------------------------
++260
+                                            7: 4 (403) 6
+
+            4:0 (58) 5 (240) 1 (260) 8                                  6:  2 (500) 3
+
+0: (3)(45)  5:(58)(60) 1  1: (240)(255)   8:(260)(360) 2          2: (409)(420) 3  3: (550)-1
+
+L7, L4, L1, E1, E8, E4 
+
+----------------------------------------------------------------------------------------------------
+-550
+                                            7: 4 (403) 6
+
+            4:0 (58) 5 (240) 1 (260) 8                                  6:  2 (420) 3
+
+0: (3)(45)  5:(58)(60) 1  1: (240)(255)   8:(260)(360) 2             2: (409) 3  3: (420)-1
+
+L7, L6, L3, L2, E2, E3, E6 
+
+
+4 tecnicas para desbordes:
+
+sat progresiva:
+cuando un nodo se llena, se busca el proximo hasta encontrar uno libre
+
+sat progresiva encadenada:
+similar a sat progresiva, pero los registros de saturacion se encadenan y non "ocupan" posiciones contiguas
+
+sat prog enc con area de desborde:
+las claves que causan desborde se almacenan en nodos especiales
+
+doble dispersion:
+se resuelven desbordes aplicando una segunda funcion de dispersion a la clave para producir un desplazamiento. 
+la segunda funcion se suma a la primera (direccion original) tantas veces como sea necesario hasta encontrar 
+una direccion con espacio

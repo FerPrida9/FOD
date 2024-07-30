@@ -1,0 +1,219 @@
+Realice el proceso de dispersion mediante el metodo de hashing extensible, sabiendo que capacidad
+registro tiene capacidad para dos claves. El numero natural indica el orden de llegada de las mismas.
+Debera explicar los pasos que realiza en cada operacion y dibujar los estados sucesivos correspondiente.
+
+1 Alfa Romeo 10100111   2 Peugeot  10101010
+3 Audi       00111110   4 Nissan   01101111
+5 BMW        01101011   6 Toyota   11110000
+7 Fiat       01011101   8 Suzuki   01011011
+9 Ford       00110100   10 Renault 11100011
+
+-------------------------------------------------------------------------------------------------------
+1 Alfa Romeo 10100111
+
+(0)     
+ 0 --->     (0)
+            (Alfa Romeo)
+
+- Agrego la clave Alfa Romeo en la cubeta apuntada por la celda 0 sin problema 
+
+-------------------------------------------------------------------------------------------------------
+2 Peugeot  10101010
+
+(0)     
+ 0 --->     (0)
+            (Alfa Romeo)(Peugeot)
+
+- Agrego la clave Peugeot en la cubeta apuntada por la celda 0 sin problema 
+
+-------------------------------------------------------------------------------------------------------
+3 Audi       00111110
+
+(1)     
+ 0 --->     (1)
+            (Peugeot)(Audi)
+            
+ 1 --->     (1)
+            (Alfa Romeo)
+
+- Intento agregar la clave Audi en la cubeta apuntada por la celda 0, se produce desborde, entonces 
+aumento en 1 el valor asociado a la cubeta saturada y creo una nueva cubeta con el nuevo valor de la
+cubeta saturada. Como en la tabla no tengo direcciones suficientes para apuntar a la nueva cubeta, aumento 
+en 1 el valor asociado a la tabla y duplico la cantidad de celdas. 
+- La celda con referencia 0 apunta a la cubeta saturada y la celda 1 apunta a la nueva cubeta
+- Se redispersan las claves
+
+-------------------------------------------------------------------------------------------------------
+4 Nissan   01101111
+
+(1)     
+ 0 --->     (1)
+            (Peugeot)(Audi)
+            
+ 1 --->     (1)
+            (Alfa Romeo)(Nissan)
+
+- Agrego la clave Nissan en la celda 1 generando colision.
+
+-------------------------------------------------------------------------------------------------------
+5 BMW        01101011
+
+(2)     
+00 --->     (1)
+10 --->     (Peugeot)(Audi)
+            
+01 --->     (2)
+            ()
+
+11 --->     (2)
+            (Alfa Romeo)(Nissan)
+
+- Se intenta agregar BMW en la celda 1, como se produce desborde, se aumenta en uno la tabla y se duplican las 
+direcciones.
+- Se intenta agregar Nissan en la celda 11, como se produce desborde, se aumenta en uno la tabla y se duplican las
+direcciones.
+
+-------------------------------------------------------------------------------------------------------
+5 BMW        01101011
+
+(3)     
+000 --->    (1)
+010 --->     (Peugeot)(Audi)
+100 --->
+110 --->
+
+001 --->    (2)
+101 --->    ()
+
+011 --->    (3)
+            (BMW)
+
+111 --->    (3)
+            (Alfa Romeo)(Nissan)
+
+- Se aumenta en uno la cubeta saturada.
+- Se genera una nueva cubeta con el mismo valor que la cubeta saturada.
+
+-------------------------------------------------------------------------------------------------------
+6 Toyota   11110000
+
+(3)     
+000 --->    (2)
+100 --->    (Toyota)
+
+010 --->    (2)
+110 --->    (Peugeot)(Audi)
+
+001 --->    (2)
+101 --->    ()
+
+011 --->    (3)
+            (BMW)
+
+111 --->    (3)
+            (Alfa Romeo)(Nissan)
+
+- Se toma tres bits para dispersar la clave Toyota, osea que debe insertarse en el nodo direccionado por la celda 000, 
+pero este tiene su capacidad colmada.
+- Se aumentan en uno el valor asociado al nodo saturado.
+- Se genera un nuevo nodo con el mismo valor asociado al nodo saturado.
+- Se compara el valor del nodo con el valor asociado a la tabla, como el primero NO es mayor que el segundo
+significa que SI dispone de entradas suficientes para direccionar al nuevo nodo. Entonces la cantidad de 
+celdas de la tabla NO se duplica.
+- Las celdas 000 y 100 de la tabla direcciona al nodo saturado, y las celdas 010 y 110 apuntan al nuevo nodo generado.
+- Se redispersan las claves involucradas.
+
+-------------------------------------------------------------------------------------------------------
+7 Fiat       01011101
+
+(3)     
+000 --->    (2)
+100 --->    (Toyota)
+
+010 --->    (2)
+110 --->    (Peugeot)(Audi)
+
+001 --->    (2)
+101 --->    (Fiat)
+
+011 --->    (3)
+            (BMW)
+
+111 --->    (3)
+            (Alfa Romeo)(Nissan)
+
+- Se toma tres bits para dispersar la clave Fiat, osea que debe insertarse en el nodo direccionado por la celda 101.
+- No se genera colision, ya que el nodo esta vacio.
+
+-------------------------------------------------------------------------------------------------------
+8 Suzuki   01011011
+
+(3)     
+000 --->    (2)
+100 --->    (Toyota)
+
+010 --->    (2)
+110 --->    (Peugeot)(Audi)
+
+001 --->    (2)
+101 --->    (Fiat)
+
+011 --->    (3)
+            (BMW)(Suzuki)
+
+111 --->    (3)
+            (Alfa Romeo)(Nissan)
+
+- Se toma tres bits para dispersar la clave Suzuki, osea que debe insertarse en el nodo direccionado por la celda 011.
+- Se genera colision, ya que el nodo no esta vacio.
+
+-------------------------------------------------------------------------------------------------------
+9 Ford       00110100
+
+(3)     
+000 --->    (2)
+100 --->    (Toyota)(Ford)
+
+010 --->    (2)
+110 --->    (Peugeot)(Audi)
+
+001 --->    (2)
+101 --->    (Fiat)
+
+011 --->    (3)
+            (BMW)(Suzuki)
+
+111 --->    (3)
+            (Alfa Romeo)(Nissan)
+
+- Se toma tres bits para dispersar la clave Ford, osea que debe insertarse en el nodo direccionado por la celda 100.
+- Se genera colision, ya que el nodo no esta vacio.
+
+-------------------------------------------------------------------------------------------------------
+10 Renault 11100011
+
+(4)     
+0000 --->   (2)
+1000 --->   (Toyota)(Ford)
+0100 --->
+1100 --->
+
+0010 --->   (2)
+0110 --->   (Peugeot)(Audi)
+1010 --->
+1110 --->
+
+0001 --->   (2)
+0101 --->   (Fiat)
+1101 --->
+1001 --->
+
+
+0011 --->   (4)
+            (Renault)
+
+1011 --->   (4)
+            (BMW)(Suzuki)
+
+0111 --->    (3)
+1111 --->    (Alfa Romeo)(Nissan)

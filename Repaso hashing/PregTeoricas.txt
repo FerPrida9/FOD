@@ -1,0 +1,73 @@
+Defina el concepto de hashing (o dispersión). ¿Cómo se relaciona este concepto con
+archivos?
+
+- Hashing es una tecnica que se utiliza para acceder a un registro de un archivo con tal solo un 
+acceso a disco
+
+Explique el concepto de función de dispersión. Enumere al menos tres funciones de
+dispersión y explique brevemente cómo funciona cada una.
+
+Una funcion de dispersion es una funcion que recibe una clave y retorna una direccion de memoria aleatoria en la
+cual debe almacenarse el registro asociado a la clave en el archivo de datos
+
+Explique los conceptos de sinónimo, colisión y desborde (overflow). ¿Qué condición es
+necesaria en el archivo directo para que pueda ocurrir una colisión y no un desborde?
+
+- Colision:
+  Ocurre cuando un registro es asignado a una direccion en la cual ya hay 1 o mas registros almacenados 
+
+- Desborde:
+  Ocurre cuando un registro es asignado a una direccion en la cual ya no hay mas lugar para almacenar registros. 
+
+- La condicion necesaria es que en la direccion asignada por la funcion de hash haya 1 o mas registros, pero debe de tener espacio
+  para otro registro/s, de lo contrario ocurriria colision y desborde en conjunto
+
+Qué alternativas existen para reducir el número de colisiones (y por ende de
+desbordes) en un archivo organizado mediante la técnica de hashing?
+
+- Existen diferentes soluciones para reducir el numero de colisiones, algunas de ellas son:
+
+- Esparcir registros: Buscar metodos que distribuyan los registros lo mas aleatoriamente posible. Esto se 
+lograria encontrando una funcion de hash lo mas eficiente posible.
+
+- Usar memoria adicional: Distribuir pocos registros en muchas direcciones. Al usar memoria adicional la densidad de empaquetamiento baja y
+ por lo tanto disminuye la cantidad de colisiones, pero se desperdicia espacio.
+
+- Colocar mas de un registro por direccion: Direcciones con N claves, esto se logra aumentando la capacidad de los nodos, logrando 
+que en un nodo entre mas de 1 registro
+
+Explique brevemente qué es la densidad de empaquetamiento. ¿Cuáles son las
+consecuencias de tener una menor densidad de empaquetamiento en un archivo
+directo?
+
+- La densidad de empaquetamiento es la relacion entre la capacidad total del archivo y la cantidad
+de registros almacenados en el archivo 
+
+- Las consecuencias son:
+
+- Menor overflow:
+  Al haber mas espacio disponible la probabilidad de que ocurra overflow disminuye
+
+- Desperdicio de espacio:
+  Se desperdicia espacio ya que se utiliza menos espacio que el reservado para guardar registros 
+
+Explique brevemente cómo funcionan las siguientes técnicas de resolución de
+desbordes que se pueden utilizar en hashing estático:
+● Saturación progresiva
+● Saturación progresiva encadenada
+● Saturación progresiva encadenada con área de desborde separada
+● Dispersión doble
+
+Saturacion progresiva:
+Cuando un nodo se llena, se busca el proximo hasta encontrar uno libre 
+
+Saturacion progresiva encadenada:
+Similar a saturacion progresiva, pero los reg. de saturacion se encadenan y no "ocupan" posiciones contiguas
+
+Saturacion progresiva encadenada con area de desborde:
+Las claves que generan overflow se almacenan en nodos especiales 
+
+Dispersion doble:
+Se resuelven overflows aplicando una segunda funcion de dispersion a la clave para producir un desplazamiento. La
+segunda funcion se suma a la primera (direccion original) tantas veces como sea necesario hasta encontrar una 
+direccion con espacio

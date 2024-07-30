@@ -1,0 +1,169 @@
+JavaScript 10100111
+
+(0)     
+ 0 ----> (0)
+         (JavaScript) N0
+
+No se toma ningun bit para dispersar la clave JavaScript ya que el valor asociado a la tabla es 0 y 
+ese valor indica la cantidad de bits que se deben tomar de la funcion de hash para dispersar la clave.
+Se inserta JavaScript en el nodo 0
+
+--------------------------------------------------------------------------------------------------------------------------
+C# 10101010
+
+(0)     
+ 0 ----> (0)
+         (JavaScript)(C#) N0
+
+Como el valor asociado a la tabla sigue siendo 0 no se toman bits de la funcion de hash. Se inserta la clave C# 
+en el nodo 0 generando colision
+
+--------------------------------------------------------------------------------------------------------------------------
+3 HTML 00111110
+
+(1)     
+ 0 ----> (1)
+         (C#)(HTML) N0
+
+ 1 ----> (1)
+         (JavaScript) N1
+
+La insercion de HTML produce colision y desborde en el nodo 0. Se aumenta en 1 el valor asociado al nodo 0 y se
+crea un nuevo nodo con el mismo valor asociado del nodo saturado. Como el valor asociado del nodo es mayor al valor 
+asociado a la tabla, se aumenta en 1 el valor asociado de la tabla y se duplica la cantidad de direcciones de la misma. Por 
+ultimo redisperso las claves involucradas en el desborde
+
+--------------------------------------------------------------------------------------------------------------------------
+NoSQL 01101111
+
+(1)     
+ 0 ----> (1)
+         (C#)(HTML) N0
+
+ 1 ----> (1)
+         (JavaScript)(NoSQL) N1
+
+Se toma 1 bit de la funcion de hash de la clave NoSQL y se inserta en el nodo 1 generando colision
+
+--------------------------------------------------------------------------------------------------------------------------
+Python 0110101
+
+(2)     
+00 ----> (1)
+10 ----> (C#)(HTML) N0
+
+01 ----> (2)
+         (Python) N1
+
+11 ----> (2)
+         (JavaScript)(NoSQL)N2
+
+La insercion de Python produce colision y desborde en el nodo 1. Se aumenta en 1 el valor asociado al nodo 1 y se
+crea un nuevo nodo con el mismo valor asociado al nodo saturado. Como el valor asociado al nodo es mayor que el valor
+asociado a la tabla, se aumenta en 1 el valor asociado a la tabla y se duplican la cantidad de direcciones de la misma.
+Por ultimo se redispersan las claves involucradas en el desborde 
+
+--------------------------------------------------------------------------------------------------------------------------
+Rust 11110000
+
+(2)     
+00 ----> (2)
+         (Rust) N0
+
+10 ----> (2)
+         (C#)(HTML) N3
+
+01 ----> (2)
+         (Python) N1
+
+11 ----> (2)
+         (JavaScript)(NoSQL)N2
+
+La insercion de la clave Rust produce colision y desborde en el nodo 0. Se aumenta en 1 el valor asociado al nodo 0 y se 
+crea un nuevo nodo con el mismo valor asociado al nodo saturado. Como el valor asociado al nodo es el mismo que el valor 
+asociado a la tabla no es necesario modificar la misma. La celda 00 queda apuntando al nodo saturado y la celda 10 al nodo
+nuevo. Por ultimo se redispersan las claves involucradas en el desborde 
+
+--------------------------------------------------------------------------------------------------------------------------
+SQL 01011101
+
+(2)     
+00 ----> (2)
+         (Rust) N0
+
+10 ----> (2)
+         (C#)(HTML) N3
+
+01 ----> (2)
+         (Python)(SQL) N1
+
+11 ----> (2)
+         (JavaScript)(NoSQL)N2
+
+Se toman 2 bits de la funcion de hash de la clave SQL y se inserta en el nodo 1 generando colision
+
+--------------------------------------------------------------------------------------------------------------------------
+Perl 01011011
+
+(3)     
+000 ----> (2)
+100 ----> (Rust) N0
+
+010 ----> (2)
+110 ----> (C#)(HTML) N3
+
+001 ----> (2)
+101 ----> (Python)(SQL) N1
+
+011 ----> (3)
+          (Perl) N2
+
+111 ----> (3)
+          (JavaScript)(NoSQL) N4
+
+La insercion de la clave Perl produce colision y desborde en el nodo 2. Se aumenta en 1 el valor asociado al nodo 2
+y se crea un nuevo nodo con el mismo valor asociado del nodo saturado. Como el valor asociado del nodo es mayor que el valor 
+asociado de la tabla, se aumenta en 1 el valor asociado de la tabla y se duplican la cantidad de direcciones de la misma. Por 
+ultimo se redispersan las claves involucradas en el desborde.
+
+--------------------------------------------------------------------------------------------------------------------------
+Java 00110100
+
+(3)     
+000 ----> (2)
+100 ----> (Rust)(Java) N0
+
+010 ----> (2)
+110 ----> (C#)(HTML) N3
+
+001 ----> (2)
+101 ----> (Python)(SQL) N1
+
+011 ----> (3)
+          (Perl) N2
+
+111 ----> (3)
+          (JavaScript)(NoSQL) N4
+
+Se toman 3 bits de la funcion de hash de la clave Java y se inserta en el nodo 0 generando colision 
+
+--------------------------------------------------------------------------------------------------------------------------
+PHP 11100011
+
+(3)     
+000 ----> (2)
+100 ----> (Rust)(Java) N0
+
+010 ----> (2)
+110 ----> (C#)(HTML) N3
+
+001 ----> (2)
+101 ----> (Python)(SQL) N1
+
+011 ----> (3)
+          (Perl)(PHP) N2
+
+111 ----> (3)
+          (JavaScript)(NoSQL) N4
+
+Se toman 3 bits de la funcion de hash de la clave PHP y se inserta en el nodo 2 generando colision

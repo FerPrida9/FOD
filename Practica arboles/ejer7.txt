@@ -1,0 +1,62 @@
+Dado el siguiente árbol B de orden 5, mostrar cómo quedaría el mismo luego de realizar
+las siguientes operaciones: +320, -390, -400, -533. Justificar detalladamente cada
+operación indicando lecturas y escrituras en orden de ocurrencia. Para la resolución de
+underflow debe utilizar política a izquierda. Graficar cada operación por separado.
+
+                     2: 0 (220) 1 (390) 4 (455) 5 (541) 3
+
+0: (10)(150)    1: (225)(241)(331)(360)     4: (400)(407)   5: (508)(533)   3: (690)(823)
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
++320
+                                            8: 2 (390) 7
+
+                2: 0 (220) 1 (320) 6                               7: 4 (455) 5 (541) 3
+
+0: (10)(150)    1: (225)(241)     6: (331)(360)     4: (400)(407)       5: (508)(533)   3: (690)(823)
+
+L2, L1, E1, E6, E2, E7, E8
+
+Intento insertar el 320 en el nodo 1, se produce overflow, divido, creo el nodo 6 y promociono el 320. Se propaga
+el overflow al nodo 2, divido, creo el nodo 7 y promociono el 390 al nuevo nodo 8 (nueva raiz).
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-390
+
+                                            8: 2 (400) 7
+
+                2: 0 (220) 1 (320) 6                               7: 4 (455) 5 (541) 3
+
+0: (10)(150)    1: (225)(241)     6: (331)(360)         4: (407)       5: (508)(533)       3: (690)(823)
+
+L8, L7, L4, E4, E8 
+
+Se elimina el 390 de la raiz, se produce underflow en el nodo 8, entonces reemplazo por la clave mas chica 
+del subarbol derecho.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-400
+
+                                            8: 2 (407) 7
+
+                2: 0 (220) 1 (320) 6                               7: 4 (508) 5 (541) 3
+
+0: (10)(150)    1: (225)(241)     6: (331)(360)           4: (455)       5: (533)       3: (690)(823)
+
+L8, L7, L4, L5, E4, E5, E7, E8
+
+Elimino el 400 de la raiz, se produce underflow en la raiz, reemplazo por la clave mas chica del subarbol derecho y se propaga
+el underflow al nodo 4. Como no tiene hermano izquierdo, redistribuyo con el hermano derecho
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-533
+
+                                            8: 2 (407) 7
+
+                2: 0 (220) 1 (320) 6                                    7: 4 (541) 3
+
+0: (10)(150)    1: (225)(241)     6: (331)(360)              4: (455)(508)             3: (690)(823)
+
+L8, L7, L5, L4, E4, E7 
+
+Se elimina el 533, se produce underflow en el nodo 5, se fusiona con el nodo 4 y se libera el nodo 5

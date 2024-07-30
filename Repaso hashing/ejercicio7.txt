@@ -1,0 +1,103 @@
+Para las siguientes claves, realice el proceso de dispersión mediante el método de hashing
+extensible, sabiendo que cada nodo tiene capacidad para dos registros. El número natural
+indica el orden de llegada de las claves.
+
+Se debe mostrar el estado del archivo para cada operación. Justifique brevemente ante colisión
+y desborde los pasos que realiza.
+
+1: Darin     00111111  2: Alterio     11110100
+3: Sbaraglia 10100101  4: De la Serna 01010111
+5: Altavista 01101011  6: Grandinetti 10101010
+
+-------------------------------------------------------------------------------------------------------------------
+1 Darin 00111111
+
+(0)       (0)
+ 0: ----> (Darin) N0
+
+El valor asociado a la tabla indica que no se deben tomar bits de la funcion de hash para dispersar la 
+clave ya que es 0. La clave Darin se inserta en el nodo 0 sin problema
+
+-------------------------------------------------------------------------------------------------------------------
+2: Alterio     11110100
+
+(0)       (0)
+ 0: ----> (Darin)(Alterio) N0
+
+El valor asociado a la tabla indica que no se deben tomar bits de la funcion de hash para dispersar la 
+clave ya que es 0. La clave Alterio se inserta en el nodo 0 generando colision
+
+-------------------------------------------------------------------------------------------------------------------
+3: Sbaraglia 10100101
+
+(1)       (1)
+ 0: ----> (Alterio) N0
+
+ 1: ----> (1)
+          (Darin)(Sbaraglia) N1
+
+Se intenta insertar la clave Sbaraglia en el nodo 0, se produce colision y desborde. Se aumenta en 1 el valor asociado
+al nodo saturado y se crea un nuevo nodo con el mismo valor asociado de ese nodo. Como el valor asociado del nodo es 
+mayor al valor asociado de la tabla, se aumenta en 1 el valor asociado a la tabla y se duplica la cantidad de direcciones 
+de la misma. Por ultimo se redispersan las claves involucradas en el desborde 
+
+-------------------------------------------------------------------------------------------------------------------
+4: De la Serna 01010111
+
+(2)       
+00: ----> (1)
+10: ----> (Alterio) N0
+
+01: ----> (2)
+          (Sbaraglia) N1
+
+11 ---->  (2)
+          (Darin)(De la Serna) N2
+
+Se intenta insertar la clave De la Serna en el nodo 1, se produce colision y desborde. Se aumenta en 1 el valor asociado al nodo 
+y se crea un nuevo nodo con el mismo valor asociado. Como el valor asociado del nodo es mayor que el valor asociado de la tabla, 
+se aumenta en 1 el valor asociado de la tabla y se duplica la cantidad de direcciones de la misma. Por ultimo, se redispersan las 
+claves involucradas en el desborde.
+
+-------------------------------------------------------------------------------------------------------------------
+5: Altavista 01101011
+
+(3)       
+000: ----> 
+100: ----> (1)
+010: ----> (Alterio) N0
+110: ---->
+
+001: ----> (2)
+101: ----> (Sbaraglia) N1
+
+011 ---->  (3)
+           (Altavista) N2
+
+111: ----> (3)
+           (Darin)(De la Serna)  N3
+
+Se intenta insertar la clave De la Altavista en el nodo 2, se produce colision y desborde. Se aumenta en 1 el valor asociado al nodo 
+y se crea un nuevo nodo con el mismo valor asociado. Como el valor asociado del nodo es mayor que el valor asociado de la tabla, 
+se aumenta en 1 el valor asociado de la tabla y se duplica la cantidad de direcciones de la misma. Por ultimo, se redispersan las 
+claves involucradas en el desborde.
+
+-------------------------------------------------------------------------------------------------------------------
+6: Grandinetti 10101010
+
+(3)       
+000: ----> 
+100: ----> (1)
+010: ----> (Alterio)(Grandinetti) N0
+110: ---->
+
+001: ----> (2)
+101: ----> (Sbaraglia) N1
+
+011 ---->  (3)
+           (Altavista) N2
+
+111: ----> (3)
+           (Darin)(De la Serna)  N3
+
+Se toman 3 bits de la funcion de hash de la clave Grandinetti y se inserta en el nodo 0 generando colision

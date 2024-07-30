@@ -1,0 +1,55 @@
+a)
+
+program arbol:
+const 
+    M = 5; // orden del arbol 
+type 
+    cliente = record 
+        num: integer;
+    end;
+
+    tnodo = record 
+        cant_claves: integer;
+        claves: array[1..M-1] of integer;
+        hijos: array[1..M] of integer;
+        enlaces: array[1..M-1] of integer;
+    end;
+
+    archClientes = file of cliente;
+    arbolB = file of tnodo;
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+Orden 5        b) +280        c) -120
+
+                                        8: 2(150)7
+
+        2: 0(120)3                                               7: 4(210)6(300)1(600)9
+
+0: (30)         3: (130)                    4: (160)(170)    6: (220)(230)(240)(250)    1: (400) (500)    9: (700)
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+b) +280
+                                        8: 2(150)7
+
+        2: 0(120)3                                               7: 4(210)6(240)5(300)1(600)9
+
+0: (30)         3: (130)                    4: (160)(170)    6: (220)(230)     5:(250)(280)    1: (400) (500)    9: (700)
+
+L8, L7, L6, E6, E5, E7 
+
+Intento insertar el 280 en el nodo 6, se produce overflow, divido, creo el nodo 5 y promociono la clave 240 al nodo 7
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+c) -120
+                                                8: 2(240)7
+
+                2: 0(150)(210)6                                               7: 5(300)1(600)9
+
+    0: (30)(130)    4: (160)(170)    6: (220)(230)              5:(250)(280)    1: (400) (500)    9: (700)
+
+Se elimina el 120 del nodo 2, se produce underflow, como es un nodo interno se reemplaza con la menor clave del subarbol derecho
+(clave 130 del nodo 3). El underflow se propaga al nodo 3, como no tiene hermano derecho se intenta redistribuir con el hermano izquierdo,
+pero este tiene la cantidad minima de claves, entonces se fusionan y se libera el nodo 3. Ahora el underflow se propaga al nodo 2, entonces 
+se redistribuye con el hermano derecho 
+
+L8, L2, L3, L0, L7, E0, E2, E7, E8

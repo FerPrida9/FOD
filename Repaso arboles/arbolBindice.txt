@@ -1,0 +1,17 @@
+program arbolB;
+const
+    M = ...;   // ORDEN DEL ARBOL 
+type 
+    alumno: record
+        DNI: integer;
+    end;
+
+    nodo = record 
+        cant_claves: integer;
+        claves: array[1..M-1] of integer;
+        enlaces: array[1..M-1] of integer;
+        hijos: array[1..M] of integer;
+    end;
+
+    archivo = file of alumno;
+    arbolB = file of nodo;

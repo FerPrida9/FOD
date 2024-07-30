@@ -1,0 +1,16 @@
+program arbolB;
+const 
+    M = ...;   // ORDEN DEL ARBOL 
+type 
+    alumno = record 
+        nombre: string;
+        DNI: integer;
+    end;
+
+    nodo = record 
+        cant_datos: integer;
+        datos: array[1..M-1] of alumno;
+        hijos: array[1..M] of integer;
+    end;
+
+    arbolB = file of nodo;
